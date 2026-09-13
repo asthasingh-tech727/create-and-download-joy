@@ -143,7 +143,7 @@ function Dashboard() {
           {upcoming.map((s) => (
             <div key={s.id} className="flex items-center gap-3 border-t py-3 first:border-t-0">
               <span className="w-16 text-[10px] font-extrabold text-primary">
-                {PERIODS[s.period].label}
+                {PERIODS[s.period]!.label}
               </span>
               <div>
                 <b className="text-xs">{s.course.subject}</b>

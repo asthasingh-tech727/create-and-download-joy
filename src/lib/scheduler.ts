@@ -69,7 +69,7 @@ C6,AI Lab,Dr. Neha Singh,CSE-B,38,Lab,2`;
 
 export function parseCsv(text: string): Course[] {
   const lines = text.trim().split(/\r?\n/).filter(Boolean);
-  const head = lines[0].split(",").map((h) => h.trim().toLowerCase());
+  const head = lines[0]!.split(",").map((h) => h.trim().toLowerCase());
   const idx = (k: string) => head.indexOf(k);
   return lines.slice(1).map((line, i) => {
     const c = line.split(",").map((v) => v.trim());
@@ -88,7 +88,7 @@ export function parseCsv(text: string): Course[] {
 export function toCsv(slots: Slot[]) {
   const rows = slots.map(
     (s) =>
-      `${s.day},${PERIODS[s.period].sub},${s.course.subject},${s.course.faculty},${s.course.batch},${s.room}`,
+      `${s.day},${PERIODS[s.period]!.sub},${s.course.subject},${s.course.faculty},${s.course.batch},${s.room}`,
   );
   return ["day,time,subject,faculty,batch,room", ...rows].join("\n");
 }
@@ -148,7 +148,7 @@ function solve(courses: Course[], rooms: Room[], opt: Options): Schedule["slots"
           `${c.course_id}|${d}`,
           (perDayBatchSubject.get(`${c.course_id}|${d}`) ?? 0) + 1,
         );
-        slots.push({ id: `${c.course_id}-${key}`, day: DAYS[d], period: p, course: c, room: room.name });
+        slots.push({ id: `${c.course_id}-${key}`, day: DAYS[d]!, period: p, course: c, room: room.name });
         placed = true;
         break;
       }
