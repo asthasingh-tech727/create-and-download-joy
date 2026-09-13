@@ -10,6 +10,7 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AnalyticsRouteImport } from './routes/analytics'
 import { Route as AssistantRouteImport } from './routes/assistant'
 import { Route as DataRouteImport } from './routes/data'
 import { Route as GenerateRouteImport } from './routes/generate'
@@ -18,6 +19,11 @@ import { Route as TimetableRouteImport } from './routes/timetable'
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AnalyticsRoute = AnalyticsRouteImport.update({
+  id: '/analytics',
+  path: '/analytics',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AssistantRoute = AssistantRouteImport.update({
@@ -43,6 +49,7 @@ const TimetableRoute = TimetableRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/analytics': typeof AnalyticsRoute
   '/assistant': typeof AssistantRoute
   '/data': typeof DataRoute
   '/generate': typeof GenerateRoute
@@ -50,6 +57,7 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/analytics': typeof AnalyticsRoute
   '/assistant': typeof AssistantRoute
   '/data': typeof DataRoute
   '/generate': typeof GenerateRoute
@@ -58,6 +66,7 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/analytics': typeof AnalyticsRoute
   '/assistant': typeof AssistantRoute
   '/data': typeof DataRoute
   '/generate': typeof GenerateRoute
@@ -65,14 +74,23 @@ export interface FileRoutesById {
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/assistant' | '/data' | '/generate' | '/timetable'
+  fullPaths:
+    '/' | '/analytics' | '/assistant' | '/data' | '/generate' | '/timetable'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/assistant' | '/data' | '/generate' | '/timetable'
-  id: '__root__' | '/' | '/assistant' | '/data' | '/generate' | '/timetable'
+  to: '/' | '/analytics' | '/assistant' | '/data' | '/generate' | '/timetable'
+  id:
+    | '__root__'
+    | '/'
+    | '/analytics'
+    | '/assistant'
+    | '/data'
+    | '/generate'
+    | '/timetable'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AnalyticsRoute: typeof AnalyticsRoute
   AssistantRoute: typeof AssistantRoute
   DataRoute: typeof DataRoute
   GenerateRoute: typeof GenerateRoute
@@ -86,6 +104,13 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/analytics': {
+      id: '/analytics'
+      path: '/analytics'
+      fullPath: '/analytics'
+      preLoaderRoute: typeof AnalyticsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/assistant': {
@@ -121,6 +146,7 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AnalyticsRoute: AnalyticsRoute,
   AssistantRoute: AssistantRoute,
   DataRoute: DataRoute,
   GenerateRoute: GenerateRoute,
