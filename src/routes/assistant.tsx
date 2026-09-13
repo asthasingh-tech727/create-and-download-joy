@@ -40,7 +40,10 @@ function AssistantPage() {
   const [result, setResult] = useState<string[] | null>(null);
 
   const run = () => {
-    if (!text.trim()) return toast.error("Describe a requirement first");
+    if (!text.trim()) {
+      toast.error("Describe a requirement first");
+      return;
+    }
     const parsed = parseRequirement(text);
     setResult(parsed);
     addConstraints(parsed);

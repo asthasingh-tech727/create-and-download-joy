@@ -43,7 +43,10 @@ function DataPage() {
   const onFile = async (file: File) => {
     const text = await file.text();
     const parsed = parseCsv(text);
-    if (!parsed.length) return toast.error("No rows found in that file");
+    if (!parsed.length) {
+      toast.error("No rows found in that file");
+      return;
+    }
     setCourses(parsed);
     toast.success(`Imported ${parsed.length} courses`);
   };
@@ -156,7 +159,10 @@ function DataPage() {
               </div>
               <button
                 onClick={() => {
-                  if (!draft.subject || !draft.faculty) return toast.error("Subject and faculty required");
+                  if (!draft.subject || !draft.faculty) {
+                    toast.error("Subject and faculty required");
+                    return;
+                  }
                   setCourses([
                     ...courses,
                     { ...draft, course_id: draft.course_id || `C${courses.length + 1}` },
